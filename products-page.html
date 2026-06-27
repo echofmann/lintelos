@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | BIM Automation Solutions for Architecture | Lintelos</title>
+    <meta name="description" content="Discover Lintelos's suite of BIM automation products designed to streamline architectural workflows, boost productivity, and eliminate repetitive tasks.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== DESIGN TOKENS (v2) ===== */
+        :root {
+            --ivory: #f5f3ee;
+            --copper: #d98238;
+            --pale-olive: #cadba9;
+            --avocado: #a1ba56;
+            --army: #717a2c;
+            --paper: #f5f3ee;
+            --paper-deep: #ece8df;
+            --ink: #1c1d17;
+            --ink-soft: #45473a;
+            --muted: #6f7163;
+            --line: #ddd8cb;
+            --sun: #e2873a;
+            --forest: #3a3f22;
+            --white: #ffffff;
+            --font-display: 'Funnel Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body); line-height: 1.65; color: var(--ink-soft);
+            background: var(--paper); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+        }
+        ::selection { background: var(--avocado); color: var(--ink); }
+
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+        .section-padding { padding: 7rem 0; }
+
+        .eyebrow {
+            font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--army);
+            display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;
+        }
+        .eyebrow::before { content: ''; width: 26px; height: 1.5px; background: var(--copper); }
+        .section-head { max-width: 760px; margin: 0 auto 4rem auto; text-align: center; }
+        .section-head .eyebrow { justify-content: center; }
+        .section-title {
+            font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.85rem);
+            font-weight: 600; line-height: 1.12; letter-spacing: -0.015em; color: var(--ink);
+        }
+
+        .btn-primary {
+            font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+            background: var(--army); color: var(--white); padding: 1rem 1.9rem;
+            border-radius: 8px; border: 2px solid transparent; cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .btn-primary:hover { background: var(--forest); color: var(--white); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(58,63,34,0.25); }
+        .btn-primary:focus-visible { outline: 2px solid var(--army); outline-offset: 3px; }
+        .btn-arrow { transition: transform 0.25s ease; }
+        .btn-primary:hover .btn-arrow { transform: translateX(3px); }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative; padding: 7.5rem 0 6rem 0; text-align: center; overflow: hidden;
+            background:
+                radial-gradient(55% 70% at 50% -10%, rgba(226,135,58,0.10) 0%, rgba(226,135,58,0) 60%),
+                linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+        }
+        .hero::after {
+            content: ''; position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
+            width: 340px; height: 340px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(217,130,56,0.15) 0%, rgba(217,130,56,0) 70%);
+            z-index: 0; pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 840px; margin: 0 auto; }
+        .hero h1 {
+            font-family: var(--font-display); font-size: clamp(2.6rem, 5.5vw, 4rem);
+            font-weight: 600; line-height: 1.06; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.4rem;
+        }
+        .hero p {
+            font-family: var(--font-body); font-size: 1.2rem; line-height: 1.6;
+            color: var(--ink-soft); max-width: 700px; margin: 0 auto;
+        }
+
+        /* ===== PRODUCTS ===== */
+        .products { background: var(--paper); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 2rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 3rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 4px; background: var(--copper); }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--avocado);
+            box-shadow: 0 24px 50px rgba(28,29,23,0.10);
+        }
+
+        .product-logo {
+            width: 96px; height: 96px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.75rem; flex-shrink: 0;
+        }
+        .product-logo img { max-width: 100%; max-height: 100%; height: auto; display: block; }
+
+        .product-title {
+            font-family: var(--font-display);
+            font-size: 1.85rem; font-weight: 600; color: var(--ink);
+            margin-bottom: 1rem; letter-spacing: -0.01em;
+        }
+        .product-description {
+            font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); margin-bottom: 2rem;
+        }
+
+        .product-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+            margin-bottom: 2rem; padding: 1.5rem;
+            background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+        }
+        .stat { text-align: center; }
+        .stat-number { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--army); display: block; }
+        .stat-label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .product-features { list-style: none; margin-bottom: 2rem; display: grid; gap: 0.7rem; flex-grow: 1; }
+        .product-features li {
+            padding-left: 1.7rem; position: relative; color: var(--ink-soft); font-size: 0.98rem;
+        }
+        .product-features li::before {
+            content: ''; position: absolute; left: 0; top: 0.5em;
+            width: 9px; height: 9px; border: 2px solid var(--avocado); border-radius: 2px;
+        }
+
+        .pricing-info {
+            background: var(--paper); border: 1px solid var(--line);
+            padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;
+        }
+        .price-display { display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+        .price-main { font-family: var(--font-display); font-size: 2.4rem; font-weight: 600; color: var(--ink); }
+        .price-period { font-size: 0.95rem; color: var(--muted); }
+        .price-note { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); text-align: center; letter-spacing: 0.04em; }
+
+        .product-card .btn-primary { width: 100%; }
+
+        /* ===== CTA ===== */
+        .cta {
+            position: relative;
+            background: linear-gradient(135deg, var(--forest) 0%, var(--ink) 100%);
+            color: var(--white); text-align: center; padding: 6.5rem 0; overflow: hidden;
+        }
+        .cta::after {
+            content: ''; position: absolute; bottom: -120px; right: -60px;
+            width: 360px; height: 360px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(217,130,56,0.22) 0%, rgba(217,130,56,0) 70%);
+            pointer-events: none;
+        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta .eyebrow { color: var(--avocado); justify-content: center; }
+        .cta h2 { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 600; margin-bottom: 1.2rem; color: var(--white); letter-spacing: -0.015em; }
+        .cta p { font-size: 1.15rem; margin: 0 auto 2.6rem auto; max-width: 620px; color: rgba(245,243,238,0.82); }
+        .cta .btn-primary { background: var(--avocado); color: var(--ink); }
+        .cta .btn-primary:hover { background: var(--white); color: var(--forest); }
+
+        /* ===== UTILITY ===== */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 968px) { .section-padding { padding: 5rem 0; } }
+        @media (max-width: 768px) {
+            .container { padding: 0 1.25rem; }
+            .hero { padding: 5rem 0 4rem 0; }
+            .section-padding { padding: 4rem 0; }
+            .products-grid { grid-template-columns: 1fr; }
+            .product-card { padding: 2rem; }
+            .product-stats { grid-template-columns: 1fr; }
+            .hero p { font-size: 1.05rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } * { scroll-behavior: auto; } }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="eyebrow">Products</span>
+                    <h1>Our Products</h1>
+                    <p>Discover our suite of intelligent automation solutions designed to transform how architecture firms work, freeing you to focus on what matters most: creative design and meaningful innovation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products section-padding">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">The Suite</span>
+                    <h2 class="section-title">Transform Your Workflow</h2>
+                </div>
+                <div class="products-grid">
+                    <!-- Revit Add-ins Product -->
+                    <article class="product-card reveal">
+                        <div class="product-logo">
+                            <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/688960ec540d8d54b67a37e0_Revit%20Addins%20Product%20Logo.png"
+                                 alt="Lintelos Revit Add-Ins logo"
+                                 loading="lazy"
+                                 decoding="async">
+                        </div>
+
+                        <h3 class="product-title">Revit Add-ins</h3>
+
+                        <p class="product-description">17 powerful automation tools that seamlessly integrate into your Revit workflow, eliminating repetitive tasks and boosting productivity across every project phase.</p>
+
+                        <div class="product-stats">
+                            <div class="stat">
+                                <span class="stat-number">17</span>
+                                <span class="stat-label">Tools</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">5-15</span>
+                                <span class="stat-label">Hrs Saved / Project</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">2024</span>
+                                <span class="stat-label">Revit Ready</span>
+                            </div>
+                        </div>
+
+                        <ul class="product-features">
+                            <li>Automated sheet and view management</li>
+                            <li>Intelligent room and element creation</li>
+                            <li>One-click batch operations</li>
+                            <li>QAQC and multi-disciplinary coordination tools</li>
+                            <li>AI-powered assistant (Ando)</li>
+                            <li>Building code quick references</li>
+                        </ul>
+
+                        <div class="pricing-info">
+                            <div class="price-display">
+                                <span class="price-main">$165</span>
+                                <span class="price-period">per user / year</span>
+                            </div>
+                            <p class="price-note">Volume discounts available • Billed annually</p>
+                        </div>
+
+                        <a href="/products/revit-add-ins" class="btn-primary" aria-label="Learn more about Lintelos Revit Add-ins">
+                            View Details &amp; Purchase <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                    </article>
+
+                    <!-- Future Product Placeholder (Hidden for now, ready for scaling)
+                    <article class="product-card">
+                        <div class="product-logo"></div>
+                        <h3 class="product-title">Future Product</h3>
+                        <p class="product-description">Description of future product capabilities and benefits.</p>
+                        <div class="product-stats">
+                            <div class="stat"><span class="stat-number">TBD</span><span class="stat-label">Features</span></div>
+                            <div class="stat"><span class="stat-number">TBD</span><span class="stat-label">Benefit</span></div>
+                            <div class="stat"><span class="stat-number">TBD</span><span class="stat-label">Version</span></div>
+                        </div>
+                        <ul class="product-features">
+                            <li>Feature 1</li>
+                            <li>Feature 2</li>
+                            <li>Feature 3</li>
+                        </ul>
+                        <div class="pricing-info">
+                            <div class="price-display"><span class="price-main">TBD</span><span class="price-period">pricing</span></div>
+                            <p class="price-note">Pricing details coming soon</p>
+                        </div>
+                        <a href="#" class="btn-primary">Learn More</a>
+                    </article>
+                    -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <span class="eyebrow">Get Started</span>
+                    <h2>Ready to Transform Your Practice?</h2>
+                    <p>Join dozens of architecture professionals who have already streamlined their workflows with Lintelos's intelligent automation solutions.</p>
+                    <a href="/products/revit-add-ins" class="btn-primary" aria-label="Start with Lintelos Revit Add-ins">
+                        Explore Revit Add-Ins <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="text/javascript">
+        function handleKeyboardNavigation(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                if (event.target.tagName === 'BUTTON' || event.target.tagName === 'A') {
+                    event.preventDefault();
+                    event.target.click();
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const interactiveElements = document.querySelectorAll('a[href], button');
+            interactiveElements.forEach(element => {
+                element.addEventListener('keydown', handleKeyboardNavigation);
+            });
+
+            const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach((el, index) => {
+                el.style.transitionDelay = `${(index % 3) * 0.08}s`;
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

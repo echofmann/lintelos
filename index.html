@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lintelos | BIM Automation & Consulting for Architecture Firms</title>
+    <meta name="description" content="Stop wasting time on repetitive tasks. Our BIM automation tools and expert consulting help architecture firms streamline workflows, boost productivity, and focus on great design.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== DESIGN TOKENS (v2) ===== */
+        :root {
+            --ivory: #f5f3ee;
+            --copper: #d98238;
+            --pale-olive: #cadba9;
+            --avocado: #a1ba56;
+            --army: #717a2c;
+            --paper: #f5f3ee;
+            --paper-deep: #ece8df;
+            --ink: #1c1d17;
+            --ink-soft: #45473a;
+            --muted: #6f7163;
+            --line: #ddd8cb;
+            --sun: #e2873a;
+            --forest: #3a3f22;
+            --white: #ffffff;
+            --font-display: 'Funnel Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.65;
+            color: var(--ink-soft);
+            background: var(--paper);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        ::selection { background: var(--avocado); color: var(--ink); }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-padding { padding: 7rem 0; }
+
+        /* ===== SHARED COMPONENTS ===== */
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--army);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 26px;
+            height: 1.5px;
+            background: var(--copper);
+        }
+
+        .section-head {
+            max-width: 760px;
+            margin: 0 auto 4rem auto;
+            text-align: center;
+        }
+
+        .section-head .eyebrow { justify-content: center; }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.85rem);
+            font-weight: 600;
+            line-height: 1.12;
+            letter-spacing: -0.015em;
+            color: var(--ink);
+        }
+
+        .section-intro {
+            margin-top: 1.4rem;
+            font-size: 1.12rem;
+            line-height: 1.7;
+            color: var(--ink-soft);
+        }
+
+        /* Buttons */
+        .btn-primary,
+        .btn-secondary {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.01em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--army);
+            color: var(--white);
+            padding: 1rem 1.9rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--forest);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(58, 63, 34, 0.25);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 2px solid var(--army);
+            outline-offset: 3px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ink);
+            padding: 1rem 1.9rem;
+            border: 2px solid var(--ink);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ink);
+            color: var(--paper);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 3px;
+        }
+
+        .btn-arrow { transition: transform 0.25s ease; }
+        .btn-primary:hover .btn-arrow,
+        .btn-secondary:hover .btn-arrow { transform: translateX(3px); }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            padding: 8rem 0 7rem 0;
+            text-align: center;
+            overflow: hidden;
+            background:
+                radial-gradient(60% 75% at 50% -10%, rgba(226, 135, 58, 0.10) 0%, rgba(226, 135, 58, 0) 60%),
+                linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+        }
+
+        /* Soft sun accent echoing the brand mark */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 130, 56, 0.16) 0%, rgba(217, 130, 56, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.7rem, 6.5vw, 5rem);
+            font-weight: 600;
+            line-height: 1.04;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 1.6rem;
+        }
+
+        .hero h1 .accent { color: var(--army); }
+        .hero h1 .dot { color: var(--copper); }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: 1.22rem;
+            line-height: 1.6;
+            color: var(--ink-soft);
+            max-width: 660px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .highlight-text { color: var(--army); font-weight: 600; }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Spec line beneath hero CTA */
+        .hero-specs {
+            margin-top: 3.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .hero-specs span { display: inline-flex; align-items: center; gap: 0.5rem; }
+        .hero-specs span::before { content: ''; width: 6px; height: 6px; background: var(--avocado); border-radius: 50%; }
+
+        /* ===== PROBLEM / SOLUTION ===== */
+        .problem-solution { background: var(--paper); }
+
+        .problem-solution-content {
+            max-width: 820px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .problem-statement {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--ink);
+            font-weight: 400;
+        }
+
+        .callout {
+            position: relative;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 3rem;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .callout::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--copper);
+        }
+
+        .callout h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .callout p {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: var(--ink-soft);
+        }
+
+        /* ===== OFFERINGS (feature) ===== */
+        .offerings { background: var(--paper-deep); }
+
+        .feature {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 3.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-index {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            color: var(--copper);
+            margin-bottom: 1.1rem;
+        }
+
+        .feature h3 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 1.1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feature p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--ink-soft);
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .feature-list li {
+            font-size: 0.98rem;
+            color: var(--ink-soft);
+            padding-left: 1.7rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 9px;
+            height: 9px;
+            border: 2px solid var(--avocado);
+            border-radius: 2px;
+        }
+
+        .feature-cta { margin-top: 2.2rem; }
+
+        /* ===== BENEFITS ===== */
+        .benefits { background: var(--paper); }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 2.4rem 2.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--avocado);
+            box-shadow: 0 18px 40px rgba(28, 29, 23, 0.08);
+        }
+
+        .benefit-index {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            color: var(--copper);
+            display: block;
+            margin-bottom: 1.4rem;
+            padding-bottom: 1.4rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .benefit-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.28rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.01em;
+        }
+
+        .benefit-card p {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: var(--ink-soft);
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            position: relative;
+            background: linear-gradient(135deg, var(--forest) 0%, var(--ink) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 6.5rem 0;
+            overflow: hidden;
+        }
+
+        .cta::after {
+            content: '';
+            position: absolute;
+            bottom: -120px;
+            right: -60px;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 130, 56, 0.22) 0%, rgba(217, 130, 56, 0) 70%);
+            pointer-events: none;
+        }
+
+        .cta-content { position: relative; z-index: 1; }
+
+        .cta .eyebrow { color: var(--avocado); justify-content: center; }
+        .cta .eyebrow::before { background: var(--copper); }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: var(--white);
+            letter-spacing: -0.015em;
+        }
+
+        .cta p {
+            font-size: 1.15rem;
+            margin: 0 auto 2.6rem auto;
+            max-width: 620px;
+            color: rgba(245, 243, 238, 0.82);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 1rem 1.9rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid rgba(245, 243, 238, 0.4);
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .btn-cta-secondary:hover {
+            background: var(--white);
+            color: var(--forest);
+            border-color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-cta-secondary:focus-visible {
+            outline: 2px solid var(--white);
+            outline-offset: 3px;
+        }
+
+        /* ===== UTILITY ===== */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+        }
+
+        /* Scroll reveal */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 968px) {
+            .section-padding { padding: 5rem 0; }
+            .feature { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem; }
+            .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 1.25rem; }
+            .hero { padding: 5rem 0 4.5rem 0; }
+            .section-padding { padding: 4rem 0; }
+            .hero-cta, .cta-buttons { flex-direction: column; width: 100%; }
+            .hero-cta .btn-primary, .hero-cta .btn-secondary,
+            .cta-buttons .btn-primary, .cta-buttons .btn-cta-secondary { width: 100%; justify-content: center; }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .callout, .feature { padding: 2rem; }
+            .problem-statement { font-size: 1.15rem; }
+            .hero-specs { gap: 1.25rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            * { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="eyebrow">BIM Automation &amp; Consulting</span>
+                    <h1>We <span class="accent">Automate.</span><br>You <span class="accent">Design<span class="dot">.</span></span></h1>
+                    <p class="hero-tagline">Stop wasting time on repetitive tasks and manual documentation. Our productivity tools <span class="highlight-text">streamline your workflow</span>, letting your team focus on what matters: <span class="highlight-text">great design</span>.</p>
+
+                    <div class="hero-cta">
+                        <!--<a href="/products/revit-add-ins" class="btn-primary" aria-label="Explore our Revit automation tools">
+                            Explore Our Tools <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </a>-->
+                        <button class="btn-primary" onclick="openCalendly()" aria-label="Schedule a free consultation">
+                            Schedule Free Consultation <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </button>
+                        <a href="/consulting" class="btn-secondary" aria-label="View consulting services">
+                            View Consulting
+                        </a>
+                    </div>
+
+                    <div class="hero-specs">
+                        <span>Built for architects</span>
+                        <span>5&ndash;15 hrs saved / project</span>
+                        <span>Human-centered</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem/Solution Section -->
+        <section class="problem-solution section-padding">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">The Opportunity</span>
+                    <h2 class="section-title">Rediscover Why You Became an Architect</h2>
+                </div>
+                <div class="problem-solution-content">
+                    <p class="problem-statement reveal">From automating drawing sets to enhancing the production process, our solutions fit seamlessly into your existing workflow, delivering <strong>instant productivity boosts</strong> that quickly pay for themselves.</p>
+
+                    <div class="callout reveal">
+                        <h3>Spend Less Time Clicking. More Time Creating.</h3>
+                        <p>Our intelligent automation eliminates the repetitive, inhuman parts of architectural work, not to chase efficiency for its own sake, but to make space for deeper work, creativity, and care. <span class="highlight-text">Technology should enhance the human touch, not replace it.</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Offerings Section -->
+        <section class="offerings section-padding">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">What We Offer</span>
+                    <h2 class="section-title">Solutions That Transform Your Practice</h2>
+                </div>
+
+                <!-- HIDDEN: Revit Add-Ins feature
+                <div class="feature reveal" style="margin-bottom:1.5rem;">
+                    <div>
+                        <div class="feature-index">01 / Product</div>
+                        <h3>Archi-Flow Revit Add-ins</h3>
+                        <p>17 powerful automation tools that eliminate hours of repetitive tasks, seamlessly integrating into your Revit workflow to boost productivity across every project phase.</p>
+                        <a href="/products/revit-add-ins" class="btn-primary" aria-label="Learn more about Lintelos Revit Add-ins">
+                            View Details &amp; Purchase <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                    <ul class="feature-list">
+                        <li>Automated sheet and view management</li>
+                        <li>One-click batch operations</li>
+                        <li>AI-powered assistant integration</li>
+                        <li>Multi-disciplinary coordination tools</li>
+                    </ul>
+                </div>
+                -->
+
+                <!-- Consulting Feature -->
+                <article class="feature reveal">
+                    <div>
+                        <div class="feature-index">Expert Consulting</div>
+                        <h3>Strategy that turns hours into outcomes</h3>
+                        <p>Strategic consulting to transform your firm's workflows, optimize processes, and accelerate project delivery with proven automation strategies and expert guidance.</p>
+                        <div class="feature-cta">
+                            <button class="btn-primary" onclick="openCalendly()" aria-label="Schedule a consultation">
+                                Schedule Consultation <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <ul class="feature-list">
+                        <li>Comprehensive workflow analysis</li>
+                        <li>Custom automation roadmaps</li>
+                        <li>Technology integration planning</li>
+                        <li>Performance analytics setup</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits section-padding">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Why Lintelos</span>
+                    <h2 class="section-title">Why Architecture Firms Choose Lintelos</h2>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card reveal">
+                        <span class="benefit-index">01</span>
+                        <h3>Built for Architects</h3>
+                        <p>We understand your challenges because we've lived them. Every solution is designed around how architects actually work, not how software thinks they should work.</p>
+                    </div>
+                    <div class="benefit-card reveal">
+                        <span class="benefit-index">02</span>
+                        <h3>Proven ROI</h3>
+                        <p>Save 5-15 hours per project while improving accuracy and consistency. Our solutions pay for themselves within the first month of implementation.</p>
+                    </div>
+                    <div class="benefit-card reveal">
+                        <span class="benefit-index">03</span>
+                        <h3>Seamless Integration</h3>
+                        <p>Our tools integrate seamlessly into your existing processes, delivering productivity gains from day one without disrupting ongoing projects or requiring extensive training.</p>
+                    </div>
+                    <div class="benefit-card reveal">
+                        <span class="benefit-index">04</span>
+                        <h3>Human-Centered</h3>
+                        <p>Technology should adapt to humans, not the other way around. Our solutions enhance your creative capabilities rather than replacing the human touch in design.</p>
+                    </div>
+                    <div class="benefit-card reveal">
+                        <span class="benefit-index">05</span>
+                        <h3>Reliable &amp; Battle-Tested</h3>
+                        <p>Extensively tested in real-world architectural projects. Our solutions are built for reliability, ensuring consistent performance when you need it most.</p>
+                    </div>
+                    <div class="benefit-card reveal">
+                        <span class="benefit-index">06</span>
+                        <h3>Expert Support</h3>
+                        <p>Direct access to our team of architectural technology experts. Get help when you need it, with support that understands your context and challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <span class="eyebrow">Get Started</span>
+                    <h2>Ready to Transform Your Workflow?</h2>
+                    <p>Join dozens of architecture professionals who have already streamlined their processes and reclaimed their creative time with Lintelos's solutions.</p>
+                    <div class="cta-buttons">
+                        <!-- HIDDEN: Archi-Flow Revit Add-Ins Button
+                        <a href="/products/revit-add-ins" class="btn-primary" aria-label="Start with our Revit automation tools">
+                            Archi-Flow Revit Add-Ins <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                        -->
+                        <button class="btn-primary" onclick="openCalendly()" aria-label="Schedule a free consultation">
+                            Schedule Free Consultation <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                        </button>
+                        <a href="/consulting" class="btn-cta-secondary" aria-label="Get expert guidance">
+                            Get Expert Guidance
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Calendly Integration -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+    <script type="text/javascript">
+        // Constants and Configuration
+        const CALENDLY_URL = 'https://calendly.com/elwyn-lintelos/30min';
+
+        // Utility Functions
+        function openCalendly() {
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initPopupWidget({ url: CALENDLY_URL });
+            } else {
+                console.error('Calendly widget not loaded');
+                window.open(CALENDLY_URL, '_blank');
+            }
+            return false;
+        }
+
+        // Event Handlers
+        function handleKeyboardNavigation(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                if (event.target.tagName === 'BUTTON' || event.target.tagName === 'A') {
+                    event.preventDefault();
+                    event.target.click();
+                }
+            }
+        }
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Calendly === 'undefined') {
+                console.warn('Calendly widget not available');
+            }
+
+            const interactiveElements = document.querySelectorAll('a[href], button');
+            interactiveElements.forEach(element => {
+                element.addEventListener('keydown', handleKeyboardNavigation);
+            });
+
+            const anchorLinks = document.querySelectorAll('a[href^="#"]');
+            anchorLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Scroll reveal animation
+            const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach((el, index) => {
+                el.style.transitionDelay = `${(index % 3) * 0.08}s`;
+                observer.observe(el);
+            });
+        });
+
+        window.addEventListener('error', function(e) {
+            if (e.message.includes('Calendly')) {
+                console.error('Calendly error:', e.message);
+            }
+        });
+    </script>
+</body>
+</html>

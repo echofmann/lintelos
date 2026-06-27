@@ -1,0 +1,954 @@
+<!-- Lintelos Revit Add-ins Content (v2 design system) - PRICING $249/USER -->
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+    /* ===== DESIGN TOKENS (v2) ===== */
+    .lintelos-revit-addins-container {
+        --ivory: #f5f3ee;
+        --copper: #d98238;
+        --pale-olive: #cadba9;
+        --avocado: #a1ba56;
+        --army: #717a2c;
+        --paper: #f5f3ee;
+        --paper-deep: #ece8df;
+        --ink: #1c1d17;
+        --ink-soft: #45473a;
+        --muted: #6f7163;
+        --line: #ddd8cb;
+        --sun: #e2873a;
+        --forest: #3a3f22;
+        --white: #ffffff;
+        --font-display: 'Funnel Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+        font-family: var(--font-body);
+        line-height: 1.65;
+        color: var(--ink-soft);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .lintelos-revit-addins-container *,
+    .lintelos-revit-addins-container *::before,
+    .lintelos-revit-addins-container *::after { box-sizing: border-box; }
+
+    .lintelos-revit-addins-container .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+    .lintelos-revit-addins-container .section-padding { padding: 6rem 0; }
+    .lintelos-revit-addins-container .hidden { display: none !important; }
+    .lintelos-revit-addins-container .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .lintelos-revit-addins-container ::selection { background: var(--avocado); color: var(--ink); }
+
+    /* Section title */
+    .lintelos-revit-addins-container .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 2.6rem);
+        font-weight: 600; text-align: center; color: var(--ink);
+        letter-spacing: -0.015em; margin-bottom: 3.5rem;
+    }
+
+    /* ===== HERO ===== */
+    .lintelos-revit-addins-container .hero {
+        position: relative; overflow: hidden;
+        padding: 6rem 0 5rem 0;
+        background:
+            radial-gradient(50% 60% at 50% -10%, rgba(226,135,58,0.10) 0%, rgba(226,135,58,0) 60%),
+            linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+    }
+    .lintelos-revit-addins-container .hero-header { max-width: 820px; margin: 0 auto 3.5rem auto; text-align: center; }
+    .lintelos-revit-addins-container .hero-header h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.3rem, 5vw, 3.6rem);
+        font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.2rem;
+    }
+    .lintelos-revit-addins-container .hero-header p { font-size: 1.18rem; line-height: 1.6; color: var(--ink-soft); max-width: 700px; margin: 0 auto; }
+
+    .lintelos-revit-addins-container .purchase-section {
+        display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2.5rem;
+        align-items: stretch; max-width: 1040px; margin: 0 auto; position: relative; z-index: 1;
+    }
+
+    .lintelos-revit-addins-container .purchase-card {
+        background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 2.5rem;
+    }
+
+    .lintelos-revit-addins-container .pricing-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--line); }
+    .lintelos-revit-addins-container .price-display { display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; }
+    .lintelos-revit-addins-container .price-main { font-family: var(--font-display); font-size: 3rem; font-weight: 600; color: var(--ink); }
+    .lintelos-revit-addins-container .price-period { font-size: 1rem; color: var(--muted); }
+    .lintelos-revit-addins-container .price-subtitle { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--muted); margin-top: 0.6rem; }
+
+    /* Quantity */
+    .lintelos-revit-addins-container .quantity-label { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--ink); margin-bottom: 1rem; }
+    .lintelos-revit-addins-container .quantity-display { font-family: var(--font-mono); background: var(--army); color: var(--white); padding: 0.25rem 0.8rem; border-radius: 6px; font-size: 0.95rem; }
+
+    .lintelos-revit-addins-container .quantity-slider {
+        width: 100%; height: 6px; border-radius: 4px; background: var(--paper-deep);
+        outline: none; -webkit-appearance: none; appearance: none; margin-bottom: 1.25rem;
+    }
+    .lintelos-revit-addins-container .quantity-slider::-webkit-slider-thumb {
+        -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%;
+        background: var(--army); cursor: pointer; transition: transform 0.2s ease;
+    }
+    .lintelos-revit-addins-container .quantity-slider::-webkit-slider-thumb:hover { transform: scale(1.12); }
+    .lintelos-revit-addins-container .quantity-slider::-moz-range-thumb {
+        width: 22px; height: 22px; border-radius: 50%; background: var(--army); cursor: pointer; border: none;
+    }
+
+    .lintelos-revit-addins-container .quantity-input-group { display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem; }
+    .lintelos-revit-addins-container .qty-btn {
+        width: 42px; height: 42px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink);
+        border-radius: 8px; font-size: 1.3rem; cursor: pointer; transition: all 0.2s ease;
+        display: flex; align-items: center; justify-content: center; font-family: var(--font-body);
+    }
+    .lintelos-revit-addins-container .qty-btn:hover { border-color: var(--army); color: var(--army); }
+    .lintelos-revit-addins-container .quantity-input-direct {
+        width: 90px; height: 42px; text-align: center; border: 1.5px solid var(--line); border-radius: 8px;
+        font-size: 1.05rem; font-family: var(--font-mono); color: var(--ink); background: var(--white);
+    }
+    .lintelos-revit-addins-container .quantity-input-direct:focus,
+    .lintelos-revit-addins-container .quantity-slider:focus-visible { outline: 2px solid var(--army); outline-offset: 2px; }
+
+    .lintelos-revit-addins-container .pricing-breakdown { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+    .lintelos-revit-addins-container .price-per-user,
+    .lintelos-revit-addins-container .volume-discount { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.95rem; }
+    .lintelos-revit-addins-container .price-per-user .label,
+    .lintelos-revit-addins-container .volume-discount .label { color: var(--muted); }
+    .lintelos-revit-addins-container .price-per-user .value { color: var(--ink); font-weight: 600; }
+    .lintelos-revit-addins-container .discount-amount { color: var(--army); font-weight: 600; }
+
+    /* Discount tiers */
+    .lintelos-revit-addins-container .discount-tiers { margin-bottom: 1.75rem; }
+    .lintelos-revit-addins-container .tier-progress { height: 4px; background: var(--paper-deep); border-radius: 4px; margin-bottom: 1rem; overflow: hidden; }
+    .lintelos-revit-addins-container .progress-bar { height: 100%; background: var(--copper); width: 0%; transition: width 0.3s ease; }
+    .lintelos-revit-addins-container .tier-labels { display: flex; justify-content: space-between; gap: 0.25rem; }
+    .lintelos-revit-addins-container .tier-point {
+        background: none; border: none; cursor: pointer; font-family: var(--font-mono);
+        font-size: 0.78rem; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+        transition: color 0.2s ease; padding: 0.25rem;
+    }
+    .lintelos-revit-addins-container .tier-point small { font-size: 0.6rem; letter-spacing: 0.03em; }
+    .lintelos-revit-addins-container .tier-point:hover { color: var(--army); }
+    .lintelos-revit-addins-container .tier-point.active { color: var(--copper); font-weight: 500; }
+
+    /* Features included */
+    .lintelos-revit-addins-container .features-included { margin-bottom: 1.75rem; }
+    .lintelos-revit-addins-container .features-included h4 { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--army); margin-bottom: 1rem; }
+    .lintelos-revit-addins-container .features-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+    .lintelos-revit-addins-container .features-list li { padding-left: 1.6rem; position: relative; font-size: 0.95rem; color: var(--ink-soft); }
+    .lintelos-revit-addins-container .features-list li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 8px; height: 8px; border: 2px solid var(--avocado); border-radius: 2px; }
+
+    /* Total */
+    .lintelos-revit-addins-container .total-section { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-bottom: 1.5rem; }
+    .lintelos-revit-addins-container .total-display { display: flex; justify-content: space-between; align-items: baseline; }
+    .lintelos-revit-addins-container .total-label { font-size: 1.05rem; color: var(--ink); font-weight: 600; }
+    .lintelos-revit-addins-container .total-price { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; color: var(--ink); }
+    .lintelos-revit-addins-container .savings-display { margin-top: 0.5rem; text-align: right; color: var(--army); font-weight: 600; font-size: 0.95rem; }
+
+    /* Buttons */
+    .lintelos-revit-addins-container .btn-primary {
+        font-family: var(--font-body); font-weight: 600; font-size: 1.05rem;
+        background: var(--army); color: var(--white); padding: 1.1rem 2rem;
+        border: 2px solid transparent; border-radius: 9px; cursor: pointer; text-decoration: none;
+        display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; width: 100%;
+        transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+    .lintelos-revit-addins-container .btn-primary:hover { background: var(--forest); color: var(--white); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(58,63,34,0.25); }
+    .lintelos-revit-addins-container .btn-primary:focus-visible { outline: 2px solid var(--army); outline-offset: 3px; }
+
+    /* Security badges */
+    .lintelos-revit-addins-container .security-badges { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .lintelos-revit-addins-container .security-badge { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); display: inline-flex; align-items: center; gap: 0.4rem; }
+    .lintelos-revit-addins-container .security-badge::before { content: ''; width: 6px; height: 6px; background: var(--avocado); border-radius: 50%; }
+
+    /* Product preview */
+    .lintelos-revit-addins-container .product-preview {
+        background: var(--white); border: 1px solid var(--line); border-radius: 18px;
+        display: flex; align-items: center; justify-content: center; padding: 3rem;
+    }
+    .lintelos-revit-addins-container .product-image { max-width: 260px; }
+    .lintelos-revit-addins-container .product-image img { width: 100%; height: auto; display: block; }
+
+    /* ===== TOOLS ===== */
+    .lintelos-revit-addins-container .tools { background: var(--paper); }
+    .lintelos-revit-addins-container .content-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
+    }
+    .lintelos-revit-addins-container .card {
+        background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .lintelos-revit-addins-container .card:hover { transform: translateY(-4px); border-color: var(--avocado); box-shadow: 0 18px 40px rgba(28,29,23,0.08); }
+    .lintelos-revit-addins-container .panel-header { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line); }
+    .lintelos-revit-addins-container .panel-index { font-family: var(--font-mono); font-size: 0.8rem; color: var(--copper); letter-spacing: 0.08em; }
+    .lintelos-revit-addins-container .card-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+    .lintelos-revit-addins-container .tool-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.1rem; }
+    .lintelos-revit-addins-container .tool-name { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--ink); font-size: 0.98rem; margin-bottom: 0.2rem; }
+    .lintelos-revit-addins-container .tool-description { font-size: 0.9rem; line-height: 1.55; color: var(--muted); }
+    .lintelos-revit-addins-container .demo-link { display: inline-flex; align-items: center; opacity: 0.85; transition: opacity 0.2s ease, transform 0.2s ease; }
+    .lintelos-revit-addins-container .demo-link:hover { opacity: 1; transform: scale(1.08); }
+    .lintelos-revit-addins-container .youtube-icon { width: 20px; height: auto; display: block; }
+
+    /* ===== FEATURES ===== */
+    .lintelos-revit-addins-container .features { background: var(--paper-deep); }
+    .lintelos-revit-addins-container .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .lintelos-revit-addins-container .feature-card {
+        background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 2.4rem 2.2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .lintelos-revit-addins-container .feature-card:hover { transform: translateY(-4px); border-color: var(--avocado); box-shadow: 0 18px 40px rgba(28,29,23,0.08); }
+    .lintelos-revit-addins-container .feature-index { font-family: var(--font-mono); font-size: 0.82rem; color: var(--copper); display: block; margin-bottom: 1.3rem; padding-bottom: 1.3rem; border-bottom: 1px solid var(--line); }
+    .lintelos-revit-addins-container .feature-card h3 { font-family: var(--font-display); font-size: 1.28rem; font-weight: 600; color: var(--ink); margin-bottom: 0.7rem; letter-spacing: -0.01em; }
+    .lintelos-revit-addins-container .feature-card p { font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); }
+
+    /* ===== CTA ===== */
+    .lintelos-revit-addins-container .cta {
+        position: relative; overflow: hidden;
+        background: linear-gradient(135deg, var(--forest) 0%, var(--ink) 100%);
+        color: var(--white); text-align: center; padding: 6rem 0;
+    }
+    .lintelos-revit-addins-container .cta::after {
+        content: ''; position: absolute; bottom: -120px; right: -60px; width: 360px; height: 360px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(217,130,56,0.22) 0%, rgba(217,130,56,0) 70%); pointer-events: none;
+    }
+    .lintelos-revit-addins-container .cta .container { position: relative; z-index: 1; }
+    .lintelos-revit-addins-container .cta h2 { font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 2.8rem); font-weight: 600; margin-bottom: 1.2rem; color: var(--white); letter-spacing: -0.015em; }
+    .lintelos-revit-addins-container .cta p { font-size: 1.12rem; margin: 0 auto 2.4rem auto; max-width: 600px; color: rgba(245,243,238,0.82); }
+    .lintelos-revit-addins-container .cta .btn-primary { width: auto; background: var(--avocado); color: var(--ink); }
+    .lintelos-revit-addins-container .cta .btn-primary:hover { background: var(--white); color: var(--forest); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 968px) {
+        .lintelos-revit-addins-container .purchase-section { grid-template-columns: 1fr; }
+        .lintelos-revit-addins-container .product-preview { order: -1; padding: 2.5rem; }
+        .lintelos-revit-addins-container .features-grid { grid-template-columns: 1fr; }
+        .lintelos-revit-addins-container .section-padding { padding: 4.5rem 0; }
+    }
+    @media (max-width: 768px) {
+        .lintelos-revit-addins-container .container { padding: 0 1.25rem; }
+        .lintelos-revit-addins-container .hero { padding: 4.5rem 0 3.5rem 0; }
+        .lintelos-revit-addins-container .purchase-card { padding: 1.75rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .lintelos-revit-addins-container * { scroll-behavior: auto; }
+    }
+</style>
+
+<div class="lintelos-revit-addins-container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-header">
+                    <h1>Archi-Flow Revit Add-ins</h1>
+                    <p>17 powerful automation tools designed to streamline your Revit workflows, eliminate repetitive tasks, and boost productivity across every phase of your architectural projects.</p>
+                </div>
+
+                <div class="purchase-section">
+                    <div class="purchase-card">
+                        <div class="pricing-header">
+                            <div class="price-display">
+                                <span class="price-main" id="displayPrice">$249</span>
+                                <span class="price-period">/ user / year</span>
+                            </div>
+                            <p class="price-subtitle">One-time purchase • Annual billing • Instant access</p>
+                        </div>
+
+                        <div class="quantity-section">
+                            <label for="quantity-slider" class="quantity-label">
+                                <span>Number of Licenses:</span>
+                                <span class="quantity-display" id="quantityDisplay">1</span>
+                            </label>
+
+                            <div class="quantity-controls">
+                                <input type="range"
+                                       id="quantity-slider"
+                                       min="1"
+                                       max="100"
+                                       value="1"
+                                       class="quantity-slider"
+                                       aria-describedby="quantity-help"
+                                       oninput="updateQuantity(this.value)">
+
+                                <div class="quantity-input-group">
+                                    <button type="button"
+                                            onclick="decrementQuantity()"
+                                            class="qty-btn"
+                                            aria-label="Decrease quantity">-</button>
+                                    <input type="number"
+                                           id="quantity-input"
+                                           min="1"
+                                           max="1000"
+                                           value="1"
+                                           class="quantity-input-direct"
+                                           aria-label="License quantity"
+                                           onchange="updateQuantity(this.value)">
+                                    <button type="button"
+                                            onclick="incrementQuantity()"
+                                            class="qty-btn"
+                                            aria-label="Increase quantity">+</button>
+                                </div>
+                            </div>
+                            <div id="quantity-help" class="sr-only">Select between 1 and 1000 licenses</div>
+
+                            <div class="pricing-breakdown" id="pricingBreakdown">
+                                <div class="price-per-user">
+                                    <span class="label">Price per user:</span>
+                                    <span class="value" id="pricePerUser">$249</span>
+                                </div>
+                                <div class="volume-discount hidden" id="volumeDiscount">
+                                    <span class="label">Volume discount:</span>
+                                    <span class="value discount-amount" id="discountAmount">-$0</span>
+                                </div>
+                            </div>
+
+                            <div class="discount-tiers">
+                                <div class="tier-indicator">
+                                    <div class="tier-progress">
+                                        <div class="progress-bar" id="progressBar"></div>
+                                    </div>
+                                    <div class="tier-labels">
+                                        <button class="tier-point active"
+                                                data-qty="1"
+                                                type="button"
+                                                aria-label="1 license tier">1</button>
+                                        <button class="tier-point"
+                                                data-qty="10"
+                                                type="button"
+                                                aria-label="10 license tier, 5% off">10 <small>5% off</small></button>
+                                        <button class="tier-point"
+                                                data-qty="25"
+                                                type="button"
+                                                aria-label="25 license tier, 10% off">25 <small>10% off</small></button>
+                                        <button class="tier-point"
+                                                data-qty="50"
+                                                type="button"
+                                                aria-label="50 license tier, 15% off">50 <small>15% off</small></button>
+                                        <button class="tier-point"
+                                                data-qty="100"
+                                                type="button"
+                                                aria-label="100+ license tier, 20% off">100+ <small>20% off</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="features-included">
+                            <h4>Everything Included</h4>
+                            <ul class="features-list">
+                                <li>17 automation tools</li>
+                                <li>Instant download access</li>
+                                <li>Free upgrades for future Revit versions</li>
+                                <li>Email support</li>
+                                <li>Video tutorials</li>
+                                <li>Revit 2024 compatible</li>
+                            </ul>
+                        </div>
+
+                        <div class="total-section">
+                            <div class="total-display">
+                                <span class="total-label">Total:</span>
+                                <span class="total-price" id="totalPrice">$249/year</span>
+                            </div>
+                            <div class="savings-display hidden" id="savingsDisplay">
+                                You save: $<span id="savingsAmount">0</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary"
+                                onclick="proceedToCheckout()"
+                                aria-label="Purchase Lintelos Revit Add-ins">
+                            Buy Now
+                        </button>
+
+                        <div class="security-badges">
+                            <div class="security-badge">Secure Payment</div>
+                            <div class="security-badge">Instant Download</div>
+                            <div class="security-badge">Email Support</div>
+                        </div>
+                    </div>
+
+                    <div class="product-preview">
+                        <div class="product-image">
+                            <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/688960ec540d8d54b67a37e0_Revit%20Addins%20Product%20Logo.png"
+                                 alt="Lintelos Revit Add-ins product logo"
+                                 loading="lazy"
+                                 decoding="async">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools section-padding">
+        <div class="container">
+            <h2 class="section-title">Complete Tool Suite</h2>
+            <div class="content-grid">
+                <!-- Sheets Panel -->
+                <article class="card">
+                    <div class="panel-header">
+                        <span class="panel-index" aria-hidden="true">01</span>
+                        <h3 class="card-title">Sheets</h3>
+                    </div>
+                    <ul class="tool-list">
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Create Set
+                                    <a href="https://youtu.be/j9LemSIOHeo"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Create Set demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Create named sheet sets for project phases or deliverables</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Sheet Index
+                                    <a href="https://youtu.be/2lNiKlqOpAE"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Sheet Index demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Update sheet index to reflect saved set names with automatic date extraction</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    View Numbers
+                                    <a href="https://youtu.be/CdOsEMmyBvM"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch View Numbers demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Automatically renumber views on active sheet</div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Views Panel -->
+                <article class="card">
+                    <div class="panel-header">
+                        <span class="panel-index" aria-hidden="true">02</span>
+                        <h3 class="card-title">Views</h3>
+                    </div>
+                    <ul class="tool-list">
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Callouts
+                                    <a href="https://youtu.be/aCTk90TYlvY"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Callouts demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Batch create enlarged floor and ceiling plans for selected rooms</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Interior Elevations
+                                    <a href="https://youtu.be/fZ3Ava0CboU"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Interior Elevations demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Batch create interior elevations for selected rooms</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    AutoTag
+                                    <a href="https://youtu.be/tQec6GxdA8E"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch AutoTag demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Simultaneously tag multiple element categories across multiple views</div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Elements Panel -->
+                <article class="card">
+                    <div class="panel-header">
+                        <span class="panel-index" aria-hidden="true">03</span>
+                        <h3 class="card-title">Elements</h3>
+                    </div>
+                    <ul class="tool-list">
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Rename Rooms
+                                    <a href="https://youtu.be/jZqjqWRjKW4"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Rename Rooms demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Batch rename selected rooms</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Renumber Elements
+                                    <a href="https://youtu.be/tWyM63D716w"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Renumber Elements demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Automatically renumber rooms, doors, or other elements</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Create Rooms
+                                    <a href="https://youtu.be/6YZcUjn3yDw"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Create Rooms demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Create rooms from bounding elements</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Create Areas
+                                    <a href="https://youtu.be/mn09XtUVyP0"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Create Areas demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Create areas from selected rooms for programming, planning, and life safety documentation</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Create Floors
+                                    <a href="https://youtu.be/ae4XwdYW12I"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Create Floors demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Create finish floors for selected rooms</div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- QAQC Panel -->
+                <article class="card">
+                    <div class="panel-header">
+                        <span class="panel-index" aria-hidden="true">04</span>
+                        <h3 class="card-title">QAQC</h3>
+                    </div>
+                    <ul class="tool-list">
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Mechanical
+                                    <a href="https://youtu.be/D6ZGwtTp3Pc"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Mechanical QAQC demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Toggle visibility settings for mechanical system coordination</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Electrical
+                                    <a href="https://youtu.be/LJPublO85P4"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Electrical QAQC demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Toggle visibility settings for electrical system coordination</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Plumbing
+                                    <a href="https://youtu.be/xy7JZm7E-hE"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Plumbing QAQC demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Toggle visibility settings for plumbing system coordination</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Boundaries
+                                    <a href="https://youtu.be/uKmwMDgROLM"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Boundaries demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Toggle visibility of room separators and area boundary lines</div>
+                            </div>
+                        </li>
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Building Code
+                                    <a href="https://youtu.be/gQ6_iRtcf4Y"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Building Code demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">Quick access to key 2024 International Building Code sections</div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- AI Panel -->
+                <article class="card">
+                    <div class="panel-header">
+                        <span class="panel-index" aria-hidden="true">05</span>
+                        <h3 class="card-title">AI Assistant</h3>
+                    </div>
+                    <ul class="tool-list">
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">
+                                    Ando
+                                    <a href="https://youtu.be/cJbnztGSN-8"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="demo-link"
+                                       title="Watch Ando AI Assistant demo">
+                                        <img src="https://cdn.prod.website-files.com/68894805ea53059625ffd3f8/68d0c625b73c4e5c19fac2a3_YouTube_play_button_icon_(2013%E2%80%932017).svg.png"
+                                             alt="Play demo"
+                                             class="youtube-icon">
+                                    </a>
+                                </div>
+                                <div class="tool-description">AI assistant with expertise in design, Revit, and IBC. Disclaimer: Ando can make mistakes. Verify important information</div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Resources Panel -->
+                <article class="card">
+                    <div class="panel-header">
+                        <span class="panel-index" aria-hidden="true">06</span>
+                        <h3 class="card-title">Resources</h3>
+                    </div>
+                    <ul class="tool-list">
+                        <li class="tool-item">
+                            <div>
+                                <div class="tool-name">Tutorials</div>
+                                <div class="tool-description">Access tutorial videos for all Lintelos Add-ins</div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features section-padding">
+        <div class="container">
+            <h2 class="section-title">Why Choose Revit Add-Ins?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-index" aria-hidden="true">01</span>
+                    <h3>Instant Productivity</h3>
+                    <p>Eliminate hours of repetitive tasks with one-click automation that seamlessly integrates into your existing workflows.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-index" aria-hidden="true">02</span>
+                    <h3>Architecture-Focused</h3>
+                    <p>Purpose-built for architectural practices, addressing real challenges faced by architects and designers daily.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-index" aria-hidden="true">03</span>
+                    <h3>Proven ROI</h3>
+                    <p>Save 5-15 hours per project while improving accuracy and consistency across your projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Transform Your Revit Workflow Today</h2>
+            <p>Join dozens of architecture professionals who have already streamlined their processes with Lintelos.</p>
+            <button class="btn-primary"
+                    onclick="scrollToTop()"
+                    aria-label="Go to purchase section">Get Started Now</button>
+        </div>
+    </section>
+</div>
+
+<script>
+// ===== CONSTANTS AND CONFIGURATION =====
+const PRICING_TIERS = [
+    { min: 1, max: 9, price: 249, discount: 0 },
+    { min: 10, max: 24, price: 237, discount: 5 },
+    { min: 25, max: 49, price: 224, discount: 10 },
+    { min: 50, max: 99, price: 212, discount: 15 },
+    { min: 100, max: Infinity, price: 199, discount: 20 }
+];
+
+const BASE_PRICE = 249;
+const MAX_SLIDER_VALUE = 100;
+
+// ===== STATE VARIABLES =====
+let currentQuantity = 1;
+
+// ===== UTILITY FUNCTIONS =====
+function getPricingForQuantity(quantity) {
+    const tier = PRICING_TIERS.find(t => quantity >= t.min && quantity <= t.max);
+    return tier || PRICING_TIERS[0];
+}
+
+function formatPrice(price) {
+    return price.toLocaleString();
+}
+
+function calculatePricing(quantity) {
+    const pricing = getPricingForQuantity(quantity);
+    const pricePerUser = pricing.price;
+    const totalPrice = pricePerUser * quantity;
+    const totalSavings = (BASE_PRICE - pricePerUser) * quantity;
+
+    return {
+        pricing,
+        pricePerUser,
+        totalPrice,
+        totalSavings
+    };
+}
+
+// ===== UI UPDATE FUNCTIONS =====
+function updateQuantityDisplay(quantity) {
+    document.getElementById('quantityDisplay').textContent = quantity;
+    document.getElementById('quantity-slider').value = Math.min(quantity, MAX_SLIDER_VALUE);
+    document.getElementById('quantity-input').value = quantity;
+}
+
+function updatePriceDisplays(calculation) {
+    const { pricePerUser, totalPrice } = calculation;
+
+    document.getElementById('displayPrice').textContent = `$${pricePerUser}`;
+    document.getElementById('pricePerUser').textContent = `$${pricePerUser}`;
+    document.getElementById('totalPrice').textContent = `$${formatPrice(totalPrice)}/year`;
+}
+
+function updateDiscountDisplay(calculation) {
+    const { totalSavings } = calculation;
+    const discountElement = document.getElementById('volumeDiscount');
+    const discountAmountElement = document.getElementById('discountAmount');
+    const savingsDisplay = document.getElementById('savingsDisplay');
+    const savingsAmount = document.getElementById('savingsAmount');
+
+    if (totalSavings > 0) {
+        discountElement.classList.remove('hidden');
+        savingsDisplay.classList.remove('hidden');
+        discountAmountElement.textContent = `-$${formatPrice(totalSavings)}`;
+        savingsAmount.textContent = formatPrice(totalSavings);
+    } else {
+        discountElement.classList.add('hidden');
+        savingsDisplay.classList.add('hidden');
+    }
+}
+
+function updateProgressBar(quantity) {
+    const progress = Math.min((quantity / MAX_SLIDER_VALUE) * 100, 100);
+    document.getElementById('progressBar').style.width = progress + '%';
+}
+
+function updateTierIndicators(quantity) {
+    const tierPoints = document.querySelectorAll('.tier-point');
+
+    tierPoints.forEach(point => point.classList.remove('active'));
+
+    if (quantity >= 100) {
+        tierPoints[4]?.classList.add('active');
+    } else if (quantity >= 50) {
+        tierPoints[3]?.classList.add('active');
+    } else if (quantity >= 25) {
+        tierPoints[2]?.classList.add('active');
+    } else if (quantity >= 10) {
+        tierPoints[1]?.classList.add('active');
+    } else {
+        tierPoints[0]?.classList.add('active');
+    }
+}
+
+// ===== MAIN LOGIC FUNCTIONS =====
+function updateQuantity(value) {
+    const quantity = Math.max(1, Math.min(1000, parseInt(value) || 1));
+    currentQuantity = quantity;
+
+    const calculation = calculatePricing(quantity);
+
+    updateQuantityDisplay(quantity);
+    updatePriceDisplays(calculation);
+    updateDiscountDisplay(calculation);
+    updateProgressBar(quantity);
+    updateTierIndicators(quantity);
+}
+
+function incrementQuantity() {
+    updateQuantity(currentQuantity + 1);
+}
+
+function decrementQuantity() {
+    updateQuantity(Math.max(1, currentQuantity - 1));
+}
+
+// ===== EVENT HANDLERS =====
+function proceedToCheckout() {
+    // Get the current quantity
+    const quantity = currentQuantity || 1;
+
+    // Your Stripe payment link (replace with your actual link)
+    const stripeCheckoutUrl = 'https://buy.stripe.com/test_8x29AN2A83L38g0dPj0ZW00';
+
+    // Redirect to Stripe with quantity parameter
+    window.location.href = stripeCheckoutUrl + '?quantity=' + quantity;
+}
+
+function scrollToTop() {
+    document.querySelector('.lintelos-revit-addins-container .hero').scrollIntoView({ behavior: 'smooth' });
+}
+
+function handleTierPointClick(event) {
+    const quantity = parseInt(event.currentTarget.dataset.qty);
+    if (!isNaN(quantity)) {
+        updateQuantity(quantity);
+    }
+}
+
+function handleKeyboardNavigation(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.target.click();
+    }
+}
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize with default quantity
+    updateQuantity(1);
+
+    // Add event handlers for tier points
+    const tierPoints = document.querySelectorAll('.tier-point');
+    tierPoints.forEach(point => {
+        point.addEventListener('click', handleTierPointClick);
+        point.addEventListener('keydown', handleKeyboardNavigation);
+    });
+
+    // Add keyboard navigation for buttons
+    const buttons = document.querySelectorAll('.lintelos-revit-addins-container button');
+    buttons.forEach(button => {
+        button.addEventListener('keydown', handleKeyboardNavigation);
+    });
+});
+</script>
