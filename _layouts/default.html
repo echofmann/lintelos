@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- ===== Brand design tokens (single source of truth) ===== -->
+    <style>
+        :root {
+            --ivory: #f5f3ee;
+            --copper: #d98238;
+            --pale-olive: #cadba9;
+            --avocado: #a1ba56;
+            --army: #717a2c;
+            --paper: #f5f3ee;
+            --paper-deep: #ece8df;
+            --ink: #1c1d17;
+            --ink-soft: #45473a;
+            --muted: #6f7163;
+            --line: #ddd8cb;
+            --sun: #e2873a;
+            --forest: #3a3f22;
+            --white: #ffffff;
+            --font-display: 'Funnel Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+        }
+
+        /* Minimal global reset so the header/footer sit flush on every page */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+    {% include header.html %}
+
+{{ content }}
+
+    {% include footer.html %}
+</body>
+</html>

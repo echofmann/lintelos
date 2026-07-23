@@ -1,0 +1,10 @@
+# Jekyll configuration for GitHub Pages
+title: Lintelos
+description: Custom tools and consulting for architecture firms.
+
+# Files/folders that are not part of the built site
+exclude:
+  - README.md
+  - CHANGELOG.md
+  - lintelos_standards.md
+  - scratchpad/

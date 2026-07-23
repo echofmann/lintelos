@@ -1,38 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lintelos Footer Component</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-    <style>
-        /* ===== DESIGN TOKENS (v2) ===== */
-        :root {
-            --ivory: #f5f3ee;
-            --copper: #d98238;
-            --pale-olive: #cadba9;
-            --avocado: #a1ba56;
-            --army: #717a2c;
-            --paper: #f5f3ee;
-            --paper-deep: #ece8df;
-            --ink: #1c1d17;
-            --ink-soft: #45473a;
-            --muted: #6f7163;
-            --line: #ddd8cb;
-            --sun: #e2873a;
-            --forest: #3a3f22;
-            --white: #ffffff;
-            --font-display: 'Funnel Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-        }
-
-        /* ===== FOOTER COMPONENT ===== */
+<!--
+  Site footer — SINGLE SOURCE OF TRUTH.
+  Edit this file to change the footer on every page of the site.
+  Pulled into every page by the include tag in _layouts/default.html.
+-->
+<style>
+    /* ===== FOOTER COMPONENT ===== */
         .lintelos-footer {
             background: var(--paper-deep);
             color: var(--ink-soft);
@@ -223,10 +195,9 @@
         .footer-nav-links a:focus:not(:focus-visible) {
             outline: none;
         }
-    </style>
-</head>
-<body>
-    <footer class="lintelos-footer" role="contentinfo">
+</style>
+
+<footer class="lintelos-footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-content">
                 <!-- Logo + tagline -->
@@ -290,7 +261,7 @@
         </div>
     </footer>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             const currentYear = new Date().getFullYear();
             const yearElement = document.getElementById('current-year');
@@ -324,5 +295,3 @@
             });
         });
     </script>
-</body>
-</html>
