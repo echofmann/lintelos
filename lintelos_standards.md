@@ -166,7 +166,7 @@ Monospace kicker above every section title.
   full token + component system (no shared external CSS, matching the deploy).
 - `header.html` and `footer.html` are shared, injected components — keep their logo image
   URLs, nav links, and JS intact when editing.
-- The Archi-Flow page is a content fragment (no `<head>`/`<body>`); its tokens and styles
+- The Revit Add-ins page is a content fragment (no `<head>`/`<body>`); its tokens and styles
   are scoped under `.lintelos-revit-addins-container` so they don't leak when embedded.
 - Preserve integrations on edit: Calendly (`openCalendly`), the Formspree endpoint, the
   Stripe checkout/billing links, phone `tel:+17274704161`, and `mailto:support@lintelos.com`.
