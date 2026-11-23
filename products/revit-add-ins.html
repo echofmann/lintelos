@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Revit Add-ins for Architecture Firms | Lintelos"
-description: "Lintelos Revit Add-ins is a suite of 17 Revit add-ins that automate repetitive production work — sheet setup, views, coordination, and QA/QC — so your architecture team can spend more time designing."
+description: "Lintelos Revit Add-ins is a suite of 17 Revit add-ins that automate repetitive production work — sheet setup, views, coordination, and QA/QC — so your architecture team can spend more time designing. $249 per user / year with volume discounts."
 ---
 
     <style>
@@ -253,19 +253,111 @@ description: "Lintelos Revit Add-ins is a suite of 17 Revit add-ins that automat
                     <div class="purchase-card">
                         <div class="pricing-header">
                             <div class="price-display">
-                                <span class="price-main" style="font-size:2rem;">Contact if interested</span>
+                                <span class="price-main" id="displayPrice">$249</span>
+                                <span class="price-period">/ user / year</span>
                             </div>
-                            <p class="price-subtitle">Licensing &amp; pricing available on request</p>
+                            <p class="price-subtitle">Annual license • Billed yearly • Instant access</p>
+                        </div>
+
+                        <div class="quantity-section">
+                            <label for="quantity-slider" class="quantity-label">
+                                <span>Number of Licenses:</span>
+                                <span class="quantity-display" id="quantityDisplay">1</span>
+                            </label>
+
+                            <div class="quantity-controls">
+                                <input type="range"
+                                       id="quantity-slider"
+                                       min="1"
+                                       max="100"
+                                       value="1"
+                                       class="quantity-slider"
+                                       aria-describedby="quantity-help"
+                                       oninput="updateQuantity(this.value)">
+
+                                <div class="quantity-input-group">
+                                    <button type="button"
+                                            onclick="decrementQuantity()"
+                                            class="qty-btn"
+                                            aria-label="Decrease quantity">-</button>
+                                    <input type="number"
+                                           id="quantity-input"
+                                           min="1"
+                                           max="1000"
+                                           value="1"
+                                           class="quantity-input-direct"
+                                           aria-label="License quantity"
+                                           onchange="updateQuantity(this.value)">
+                                    <button type="button"
+                                            onclick="incrementQuantity()"
+                                            class="qty-btn"
+                                            aria-label="Increase quantity">+</button>
+                                </div>
+                            </div>
+                            <div id="quantity-help" class="sr-only">Select between 1 and 1000 licenses</div>
+
+                            <div class="pricing-breakdown" id="pricingBreakdown">
+                                <div class="price-per-user">
+                                    <span class="label">Price per user:</span>
+                                    <span class="value" id="pricePerUser">$249</span>
+                                </div>
+                                <div class="volume-discount hidden" id="volumeDiscount">
+                                    <span class="label">Volume discount:</span>
+                                    <span class="value discount-amount" id="discountAmount">-$0</span>
+                                </div>
+                            </div>
+
+                            <div class="discount-tiers">
+                                <div class="tier-indicator">
+                                    <div class="tier-progress">
+                                        <div class="progress-bar" id="progressBar"></div>
+                                    </div>
+                                    <div class="tier-labels">
+                                        <button class="tier-point active"
+                                                data-qty="1"
+                                                type="button"
+                                                aria-label="1 license tier">1</button>
+                                        <button class="tier-point"
+                                                data-qty="10"
+                                                type="button"
+                                                aria-label="10 license tier, 5% off">10 <small>5% off</small></button>
+                                        <button class="tier-point"
+                                                data-qty="25"
+                                                type="button"
+                                                aria-label="25 license tier, 10% off">25 <small>10% off</small></button>
+                                        <button class="tier-point"
+                                                data-qty="50"
+                                                type="button"
+                                                aria-label="50 license tier, 15% off">50 <small>15% off</small></button>
+                                        <button class="tier-point"
+                                                data-qty="100"
+                                                type="button"
+                                                aria-label="100+ license tier, 20% off">100+ <small>20% off</small></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="features-included">
                             <h4>Everything Included</h4>
                             <ul class="features-list">
                                 <li>17 automation tools</li>
+                                <li>Instant download access</li>
+                                <li>Free upgrades for future Revit versions</li>
                                 <li>Email support</li>
                                 <li>Video tutorials</li>
                                 <li>Revit 2025 &amp; 2026 compatible</li>
                             </ul>
+                        </div>
+
+                        <div class="total-section">
+                            <div class="total-display">
+                                <span class="total-label">Total:</span>
+                                <span class="total-price" id="totalPrice">$249/year</span>
+                            </div>
+                            <div class="savings-display hidden" id="savingsDisplay">
+                                You save: $<span id="savingsAmount">0</span>
+                            </div>
                         </div>
 
                         <a href="/contact"
@@ -693,5 +785,162 @@ description: "Lintelos Revit Add-ins is a suite of 17 Revit add-ins that automat
     </section>
 </div>
     </main>
+
+    <script>
+// ===== CONSTANTS AND CONFIGURATION =====
+const PRICING_TIERS = [
+    { min: 1, max: 9, price: 249, discount: 0 },
+    { min: 10, max: 24, price: 237, discount: 5 },
+    { min: 25, max: 49, price: 224, discount: 10 },
+    { min: 50, max: 99, price: 212, discount: 15 },
+    { min: 100, max: Infinity, price: 199, discount: 20 }
+];
+
+const BASE_PRICE = 249;
+const MAX_SLIDER_VALUE = 100;
+
+// ===== STATE VARIABLES =====
+let currentQuantity = 1;
+
+// ===== UTILITY FUNCTIONS =====
+function getPricingForQuantity(quantity) {
+    const tier = PRICING_TIERS.find(t => quantity >= t.min && quantity <= t.max);
+    return tier || PRICING_TIERS[0];
+}
+
+function formatPrice(price) {
+    return price.toLocaleString();
+}
+
+function calculatePricing(quantity) {
+    const pricing = getPricingForQuantity(quantity);
+    const pricePerUser = pricing.price;
+    const totalPrice = pricePerUser * quantity;
+    const totalSavings = (BASE_PRICE - pricePerUser) * quantity;
+
+    return {
+        pricing,
+        pricePerUser,
+        totalPrice,
+        totalSavings
+    };
+}
+
+// ===== UI UPDATE FUNCTIONS =====
+function updateQuantityDisplay(quantity) {
+    document.getElementById('quantityDisplay').textContent = quantity;
+    document.getElementById('quantity-slider').value = Math.min(quantity, MAX_SLIDER_VALUE);
+    document.getElementById('quantity-input').value = quantity;
+}
+
+function updatePriceDisplays(calculation) {
+    const { pricePerUser, totalPrice } = calculation;
+
+    document.getElementById('displayPrice').textContent = `$${pricePerUser}`;
+    document.getElementById('pricePerUser').textContent = `$${pricePerUser}`;
+    document.getElementById('totalPrice').textContent = `$${formatPrice(totalPrice)}/year`;
+}
+
+function updateDiscountDisplay(calculation) {
+    const { totalSavings } = calculation;
+    const discountElement = document.getElementById('volumeDiscount');
+    const discountAmountElement = document.getElementById('discountAmount');
+    const savingsDisplay = document.getElementById('savingsDisplay');
+    const savingsAmount = document.getElementById('savingsAmount');
+
+    if (totalSavings > 0) {
+        discountElement.classList.remove('hidden');
+        savingsDisplay.classList.remove('hidden');
+        discountAmountElement.textContent = `-$${formatPrice(totalSavings)}`;
+        savingsAmount.textContent = formatPrice(totalSavings);
+    } else {
+        discountElement.classList.add('hidden');
+        savingsDisplay.classList.add('hidden');
+    }
+}
+
+function updateProgressBar(quantity) {
+    const progress = Math.min((quantity / MAX_SLIDER_VALUE) * 100, 100);
+    document.getElementById('progressBar').style.width = progress + '%';
+}
+
+function updateTierIndicators(quantity) {
+    const tierPoints = document.querySelectorAll('.tier-point');
+
+    tierPoints.forEach(point => point.classList.remove('active'));
+
+    if (quantity >= 100) {
+        tierPoints[4]?.classList.add('active');
+    } else if (quantity >= 50) {
+        tierPoints[3]?.classList.add('active');
+    } else if (quantity >= 25) {
+        tierPoints[2]?.classList.add('active');
+    } else if (quantity >= 10) {
+        tierPoints[1]?.classList.add('active');
+    } else {
+        tierPoints[0]?.classList.add('active');
+    }
+}
+
+// ===== MAIN LOGIC FUNCTIONS =====
+function updateQuantity(value) {
+    const quantity = Math.max(1, Math.min(1000, parseInt(value) || 1));
+    currentQuantity = quantity;
+
+    const calculation = calculatePricing(quantity);
+
+    updateQuantityDisplay(quantity);
+    updatePriceDisplays(calculation);
+    updateDiscountDisplay(calculation);
+    updateProgressBar(quantity);
+    updateTierIndicators(quantity);
+}
+
+function incrementQuantity() {
+    updateQuantity(currentQuantity + 1);
+}
+
+function decrementQuantity() {
+    updateQuantity(Math.max(1, currentQuantity - 1));
+}
+
+// ===== EVENT HANDLERS =====
+function scrollToTop() {
+    document.querySelector('.lintelos-revit-addins-container .hero').scrollIntoView({ behavior: 'smooth' });
+}
+
+function handleTierPointClick(event) {
+    const quantity = parseInt(event.currentTarget.dataset.qty);
+    if (!isNaN(quantity)) {
+        updateQuantity(quantity);
+    }
+}
+
+function handleKeyboardNavigation(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.target.click();
+    }
+}
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize with default quantity
+    updateQuantity(1);
+
+    // Add event handlers for tier points
+    const tierPoints = document.querySelectorAll('.tier-point');
+    tierPoints.forEach(point => {
+        point.addEventListener('click', handleTierPointClick);
+        point.addEventListener('keydown', handleKeyboardNavigation);
+    });
+
+    // Add keyboard navigation for buttons
+    const buttons = document.querySelectorAll('.lintelos-revit-addins-container button');
+    buttons.forEach(button => {
+        button.addEventListener('keydown', handleKeyboardNavigation);
+    });
+});
+</script>
 
     
