@@ -53,7 +53,7 @@ description: "Lintelos Revit Add-ins is a suite of 16 Revit add-ins that automat
 
     /* ===== HERO ===== */
     .lintelos-revit-addins-container .hero {
-        position: relative; overflow: hidden;
+        position: relative; overflow: clip;
         padding: 6rem 0 5rem 0;
         background:
             radial-gradient(50% 60% at 50% -10%, rgba(226,135,58,0.10) 0%, rgba(226,135,58,0) 60%),
@@ -169,6 +169,8 @@ description: "Lintelos Revit Add-ins is a suite of 16 Revit add-ins that automat
     .lintelos-revit-addins-container .product-preview {
         background: var(--white); border: 1px solid var(--line); border-radius: 18px;
         display: flex; align-items: center; justify-content: center; padding: 3rem;
+        /* Square card that stays in view while the purchase card scrolls */
+        align-self: start; aspect-ratio: 1 / 1; position: sticky; top: 6rem;
     }
     .lintelos-revit-addins-container .product-image { max-width: 260px; }
     .lintelos-revit-addins-container .product-image img { width: 100%; height: auto; display: block; }
@@ -224,7 +226,7 @@ description: "Lintelos Revit Add-ins is a suite of 16 Revit add-ins that automat
     /* ===== RESPONSIVE ===== */
     @media (max-width: 968px) {
         .lintelos-revit-addins-container .purchase-section { grid-template-columns: 1fr; }
-        .lintelos-revit-addins-container .product-preview { order: -1; padding: 2.5rem; }
+        .lintelos-revit-addins-container .product-preview { order: -1; padding: 2.5rem; position: static; aspect-ratio: auto; }
         .lintelos-revit-addins-container .features-grid { grid-template-columns: 1fr; }
         .lintelos-revit-addins-container .section-padding { padding: 4.5rem 0; }
     }
